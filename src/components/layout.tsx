@@ -9,7 +9,7 @@ interface ILayout {
 
 const Layout = ({ children }: ILayout) => {
     return (
-        <Box display="flex" flexDirection="column" minHeight="100vh">
+        <Box display="flex" flexDirection="column" minW={"100%"} minH="100vh">
             <Navbar data={Navigation} />
             <Stack mt={60} gap="5rem" flex="1">
                 {children}

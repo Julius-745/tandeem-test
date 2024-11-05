@@ -1,4 +1,4 @@
-import { Stack, Center, Button, InputGroup, Input, InputRightElement, InputLeftElement, Spinner} from "@chakra-ui/react";
+import { Stack, Center, Button, InputGroup, Input, InputRightElement, InputLeftElement, Spinner, useToast} from "@chakra-ui/react";
 import { useFetchData } from "../../hooks/useFetchData";
 import { Search2Icon } from "@chakra-ui/icons";
 import { CardWeater } from "../card";
@@ -6,18 +6,20 @@ import { CardWeater } from "../card";
 
 
 const Banner = () => {
-    const {data, loading, setCity, fetchData} = useFetchData()
-    const date = new Date().toJSON().slice(0, 10);
+    const {city, data, units, loading, setCity, fetchData} = useFetchData()
+    const baseImageURL = import.meta.env.VITE_BASE_IMAGE_URI
+    const date = new Date().toLocaleString();
 
     return (
-        <Center>
+        <Center m={10}>
             <Stack>
-                <InputGroup minW={"50vh"} >
+                <InputGroup>
                     <InputLeftElement>
                         <Search2Icon/>
                     </InputLeftElement>
                     <Input
                         borderColor={"black"}
+                        value={city}
                         onChange={(e) => setCity(e.target.value)}
                         pr='4.5rem'
                         type={'text'}
@@ -37,9 +39,13 @@ const Banner = () => {
                         location={data.name } 
                         temp={data.main.temp} 
                         humidity={data.main.humidity} 
-                        wind={data.main.speed}
-                        clouds={data.clouds.all}
+                        wind={data.wind.speed}
+                        visibility={data.visibility}
                         pressure={data.main.pressure}
+                        feelsLike={data.main.feels_like}
+                        weather={data.weather[0].description}
+                        icon={baseImageURL+data.weather[0].icon+".png"}
+                        unit={units}
                         date={date}
                     />
                 )

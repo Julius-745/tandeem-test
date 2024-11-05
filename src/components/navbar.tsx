@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { INavigation } from "../constant";
 import logo from "../assets/logo.png"
 import { Box, Center, Container, HStack, Stack, Divider, Image, Link, Text, Flex  } from "@chakra-ui/react";
@@ -30,7 +29,6 @@ const MenuList: React.FC<INavbar> = ({ data }) => {
 
 
 export const Navbar: React.FC<INavbar> = ({data}) => {
-  const { t } = useTranslation();
 
     return (
         <Center>
@@ -59,13 +57,15 @@ export const Navbar: React.FC<INavbar> = ({data}) => {
                 />
                 </URI>
               </HStack>
-              <HStack gap={10}>
+              <HStack gap={10} display={{base: "none", md: "flex"}}>
                 <MenuList data={data} />
               </HStack>
             </Flex>
-            <MenuDrawer>
-              <MenuList data={data} />
-            </MenuDrawer>
+            <Box display={{base: "block", md: "none"}}>
+              <MenuDrawer>
+                <MenuList data={data} />
+              </MenuDrawer>
+            </Box>
           </Box>
         </Container>
         <Divider size={"lg"} backgroundColor={"#BAD6FB"} height={0.5} orientation="horizontal" variant={"solid"} mt={5}/>
