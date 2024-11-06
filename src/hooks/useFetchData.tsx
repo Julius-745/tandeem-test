@@ -1,55 +1,27 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
-import { useToast } from "@chakra-ui/react"
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeather, setCity, setUnits } from "../redux/weatherSlice";
 
 export const useFetchData = () => {
-    const endpoint = import.meta.env.VITE_API_ENDPOINT
-    const key = import.meta.env.VITE_API_KEY || ""
-    const toast = useToast()
-    const [data, setData] = useState<any>()
-    const [units, setUnits] = useState<string>("metric")
-    const [city, setCity] = useState<string>("Jakarta")
-    const [error, setError] = useState<string>("")
-    const [loading, setLoading] = useState<boolean>()
+    const dispatch = useDispatch();
     
+    const { data, units, city, loading, error } = useSelector((state: any) => state.weather);
 
-    const fetchData = async () => {
-        try {
-            setLoading(true)
-            const result = await axios.get(`${endpoint}?q=${city}&appid=${key}&units=${units}`)
-            setData(result.data)
-        } catch (error: any) {
-            setError(error.response.data.message)
-        } finally {
-            setLoading(false)
-        }
-    }
+    const fetchData = () => {
+        dispatch(fetchWeather(city));
+    };
 
     useEffect(() => {
-        if(error !== ""){
-        toast({
-            title: "Please Search Valid City",
-            status: "error",
-            description: error,
-            isClosable: true
-        })
-            setError("")
-            setCity("")
-        }
-    }, [error, toast])
-
-    useEffect(() => {
-        fetchData()
-    },[])
+        fetchData();
+    }, [city, dispatch]);
 
     return {
         data,
-        units, 
+        units,
         loading,
         city,
         fetchData,
-        setCity,
-        setUnits,
-        error
-    }
-}
+        setCity: (newCity: string) => dispatch(setCity(newCity)),
+        setUnits: (newUnits: string) => dispatch(setUnits(newUnits)),
+    };
+};

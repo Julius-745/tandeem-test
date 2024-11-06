@@ -16,7 +16,7 @@ export interface IWheater {
     icon: string;
 };
 
-export const CardWeater = ({ location, temp, humidity, wind, date, visibility, pressure, unit, weather, icon, feelsLike }: IWheater) => {
+export const CardWeather = ({ location, temp, humidity, wind, date, visibility, pressure, unit, weather, icon, feelsLike }: IWheater) => {
 
     return (
         <Card 
