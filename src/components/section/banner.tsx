@@ -13,12 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Search2Icon } from "@chakra-ui/icons";
 import { CardWeather } from "../card";
 import { fetchWeather, setCity } from "../../redux/weatherSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Banner = () => {
     const dispatch = useDispatch();
     const toast = useToast();
-    
+    const [hasSearch, setHasSearch] = useState<boolean>(false)
     const city = useSelector((state: any) => state.weather.city);
     const data = useSelector((state: any) => state.weather.data);
     const units = useSelector((state: any) => state.weather.units);
@@ -28,15 +28,18 @@ const Banner = () => {
     const date = new Date().toLocaleString();
 
     useEffect(() => {
+        if(error && hasSearch) {
             toast({
                 title: "Please Search Valid City",
                 status: "error",
                 description: error,
                 isClosable: true,
             });
-    }, [error])
+        }
+    }, [error, hasSearch])
 
     const handleSearch = () => {
+        setHasSearch(true)
         dispatch(fetchWeather(city));
     };
 
