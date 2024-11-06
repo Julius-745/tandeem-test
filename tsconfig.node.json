@@ -6,7 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
-    "allowImportingTsExtensions": true,
 
     /* Bundler mode */
     "moduleResolution": "Bundler",

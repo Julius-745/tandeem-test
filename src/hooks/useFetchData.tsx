@@ -19,6 +19,7 @@ export const useFetchData = () => {
         data,
         units,
         loading,
+        error,
         city,
         fetchData,
         setCity: (newCity: string) => dispatch(setCity(newCity)),

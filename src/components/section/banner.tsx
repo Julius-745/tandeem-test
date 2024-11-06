@@ -65,7 +65,7 @@ const Banner = () => {
                     </InputRightElement>
                 </InputGroup>
                 {loading ? (
-                    <Spinner />
+                    <Spinner role="status"/>
                 ) : (
                     data && (
                         <CardWeather
